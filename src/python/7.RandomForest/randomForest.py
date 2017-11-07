@@ -66,7 +66,7 @@ def cross_validation_split(dataset, n_folds):
 def test_split(index, value, dataset):
     left, right = list(), list()
     for row in dataset:
-        if row[index] < value:
+        if float(row[index]) < float(value):
             left.append(row)
         else:
             right.append(row)
@@ -162,7 +162,7 @@ def build_tree(train, max_depth, min_size, n_features):
 
 # Make a prediction with a decision tree
 def predict(node, row):   # 预测模型分类结果
-    if row[node['index']] < node['value']:
+    if float(row[node['index']]) < float(node['value']):
         if isinstance(node['left'], dict):       # isinstance 是 Python 中的一个内建函数。是用来判断一个对象是否是一个已知的类型。
             return predict(node['left'], row)
         else:
@@ -315,7 +315,7 @@ if __name__ == '__main__':
         scores = evaluate_algorithm(dataset, random_forest, n_folds, max_depth, min_size, sample_size, n_trees, n_features)
         # 每一次执行本文件时都能产生同一个随机数
         seed(1)
-        print 'random=', random()
-        print 'Trees: %d' % n_trees
-        print 'Scores: %s' % scores
-        print 'Mean Accuracy: %.3f%%' % (sum(scores)/float(len(scores)))
+        print('random=', random())
+        print('Trees: %d' % n_trees)
+        print('Scores: %s' % scores)
+        print('Mean Accuracy: %.3f%%' % (sum(scores)/float(len(scores))))

@@ -31,7 +31,7 @@ def loadDataSet(fileName):
         # 将所有的元素转化为float类型
         # map all elements to float()
         # map() 函数具体的含义，可见 https://my.oschina.net/zyzzy/blog/115096
-        fltLine = map(float, curLine)
+        fltLine = list(map(float, curLine))
         dataMat.append(fltLine)
     return dataMat
 
@@ -239,7 +239,7 @@ def prune(tree, testData):
         errorMerge = sum(power(testData[:, -1] - treeMean, 2))
         # 如果 合并的总方差 < 不合并的总方差，那么就进行合并
         if errorMerge < errorNoMerge:
-            print "merging"
+            print("merging")
             return treeMean
         else:
             return tree
@@ -436,24 +436,24 @@ if __name__ == "__main__":
     testMat = mat(loadDataSet('input/9.RegTrees/bikeSpeedVsIq_test.txt'))
     # # 回归树
     myTree1 = createTree(trainMat, ops=(1, 20))
-    print myTree1
+    print(myTree1)
     yHat1 = createForeCast(myTree1, testMat[:, 0])
-    print "--------------\n"
-    # print yHat1
-    # print "ssss==>", testMat[:, 1]
-    print "回归树:", corrcoef(yHat1, testMat[:, 1],rowvar=0)[0, 1]
+    print("--------------\n")
+    # print(yHat1)
+    # print("ssss==>", testMat[:, 1])
+    print("回归树:", corrcoef(yHat1, testMat[:, 1],rowvar=0)[0, 1])
 
     # 模型树
     myTree2 = createTree(trainMat, modelLeaf, modelErr, ops=(1, 20))
     yHat2 = createForeCast(myTree2, testMat[:, 0], modelTreeEval)
-    print myTree2
-    print "模型树:", corrcoef(yHat2, testMat[:, 1],rowvar=0)[0, 1]
+    print(myTree2)
+    print("模型树:", corrcoef(yHat2, testMat[:, 1],rowvar=0)[0, 1])
 
     # 线性回归
     ws, X, Y = linearSolve(trainMat)
-    print ws
+    print(ws)
     m = len(testMat[:, 0])
     yHat3 = mat(zeros((m, 1)))
     for i in range(shape(testMat)[0]):
         yHat3[i] = testMat[i, 0]*ws[1, 0] + ws[0, 0]
-    print "线性回归:", corrcoef(yHat3, testMat[:, 1],rowvar=0)[0, 1]
+    print("线性回归:", corrcoef(yHat3, testMat[:, 1],rowvar=0)[0, 1])

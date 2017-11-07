@@ -9,7 +9,7 @@ Tree-Based Regression Methods Source Code for Machine Learning in Action Ch. 9
 《机器学习实战》更新地址：https://github.com/apachecn/MachineLearning
 '''
 import regTrees
-from Tkinter import *
+from tkinter import *
 from numpy import *
 
 import matplotlib
@@ -41,25 +41,24 @@ def reDraw(tolS, tolN):
         yHat = regTrees.createForeCast(myTree, reDraw.testDat)
 
     # use scatter for data set
-    reDraw.a.scatter(reDraw.rawDat[:, 0], reDraw.rawDat[:, 1], s=5)
+    reDraw.a.scatter(array(reDraw.rawDat[:, 0]), array(reDraw.rawDat[:, 1]))
     # use plot for yHat
     reDraw.a.plot(reDraw.testDat, yHat, linewidth=2.0, c='red')
     reDraw.canvas.show()
-
 
 def getInputs():
     try:
         tolN = int(tolNentry.get())
     except:
         tolN = 10
-        print "enter Integer for tolN"
+        print("enter Integer for tolN")
         tolNentry.delete(0, END)
         tolNentry.insert(0, '10')
     try:
         tolS = float(tolSentry.get())
     except:
         tolS = 1.0
-        print "enter Float for tolS"
+        print("enter Float for tolS")
         tolSentry.delete(0, END)
         tolSentry.insert(0, '1.0')
     return tolN, tolS
@@ -107,8 +106,14 @@ def main(root):
     reDraw.canvas.show()
     reDraw.canvas.get_tk_widget().grid(row=0, columnspan=3)
 
-    reDraw.rawDat = mat(regTrees.loadDataSet('testData/RT_sine.txt'))
-    reDraw.testDat = arange(min(reDraw.rawDat[:, 0]), max(reDraw.rawDat[:, 0]), 0.01)
+    reDraw.rawDat = mat(regTrees.loadDataSet('input/9.regTrees/sine.txt'))
+    #start = list(min(reDraw.rawDat[:, 0]))
+    #end =  list(max(reDraw.rawDat[:, 0]))
+    start = min(reDraw.rawDat[:, 0])
+    end = max(reDraw.rawDat[:, 0])
+    # print(start)
+    # print(end)
+    reDraw.testDat = arange(start, end, 0.01)
     reDraw(1.0, 10)
 
 
